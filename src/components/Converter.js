@@ -1,18 +1,29 @@
 import React from "react";
 import { useState } from "react";
 import CurrencySelect from "./CurrencySelect";
+import fetch from "unfetch";
+import useSWR from "swr";
+
+const API_URL = "https://open.exchangerate-api.com/v6/latest";
 
 const Converter = (props) => {
   const [toCurrency, setToCurrency] = useState('USD')
   const [fromValue, setFromValue] = useState(0)
   const [toValue, setToValue] = useState(0)
+  
+  // Using SWR for handling strict API rate limits
+  const { data: data, error } = useSWR(API_URL, fetcher);
+  if (error) alert('Error occurred. Try again.');
+  if (!data) return <div>...loading</div>;
+
+  const currencies = data;
 
   const getRate = (currency) => {
-    return props.currencies.rates[currency];
+    return currencies.rates[currency];
   };
 
   const currencyKeys = () => {
-    return Object.keys(props.currencies.rates);
+    return Object.keys(currencies.rates);
   };
 
   const convertValue = (toCurrency, amount) => {
@@ -50,6 +61,11 @@ const Converter = (props) => {
       <h5>Result: {toValue}</h5>
     </div>
   )
+};
+
+const fetcher = async () => {
+  const response = await fetch(API_URL);
+  return await response.json();
 };
 
 export default Converter;

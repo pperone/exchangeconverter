@@ -1,46 +1,53 @@
 import React from "react";
-import fetch from "unfetch";
-import useSWR from 'swr'
-import TextField from "@mui/material/TextField";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
+import { useState } from "react";
+import CurrencySelect from "./CurrencySelect";
 
-const API_URL = "https://open.exchangerate-api.com/v6/latest";
+const Converter = (props) => {
+  const [toCurrency, setToCurrency] = useState('USD')
+  const [fromValue, setFromValue] = useState(0)
+  const [toValue, setToValue] = useState(0)
 
-const Converter = () => {
-  const { data: currencies, error } = useSWR(API_URL, getData);
-  if (error) return <div>failed to load</div>
-  if (!currencies) return <div>loading...</div>
-  console.log(currencies.rates)
-  // return (
-  //   <div>
-  //     {currencies && currencies.map(currency => (
-  //       <div key={currency.id}>{currency.title}</div>
-  //     )}
-  //   </div>
-  // )
+  const getRate = (currency) => {
+    return props.currencies.rates[currency];
+  };
+
+  const currencyKeys = () => {
+    return Object.keys(props.currencies.rates);
+  };
+
+  const convertValue = (toCurrency, amount) => {
+    return getRate(toCurrency) * amount;
+  };
+
+  const handleToCurrencyChange = (e) => {
+    setToCurrency(e.target.value);
+  };
+
+  const handleFromValueChange = (e) => {
+    const value = e.target.value.replace(',', '.')
+  
+    if (!isNaN(value)) {
+        setFromValue(value)
+    }
+  };
+
+  const handleConversion = () => {
+    setToValue(convertValue(toCurrency, fromValue));
+  }
+
   return (
     <div>
       <h3>Enter amount and select currency to convert:</h3>
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" focused />
-      {/* <Select value={fromCurrency} onChange={handleFromCurrencyChange}>
-        <MenuItem value={"EUR"}>EUR</MenuItem>
-        {Object.keys(currencies.rates).map((rate, key) => (
-          <MenuItem key={key} value={rate}>
-            {rate}
-          </MenuItem>
-        ))}
-      </Select> */}
-      <TextField id="outlined-basic" label="Outlined" variant="outlined" focused />
-      <Button variant="contained" size="large">Convert</Button>
+      <input value={fromValue} onChange={handleFromValueChange}/>
+      <CurrencySelect 
+        value={toCurrency}
+        onChange={handleToCurrencyChange}
+        options={currencyKeys()}
+      />
+      <button onClick={handleConversion}>Convert</button>
+      <h5>Result: {toValue}</h5>
     </div>
   )
-};
-
-const getData = async () => {
-  const response = await fetch(API_URL);
-  return await response.json();
 };
 
 export default Converter;

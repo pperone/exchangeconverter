@@ -1,0 +1,24 @@
+select {
+  background-color: white;
+  max-width: 200px;
+  margin:auto, 10px, auto, 10px;
+  height: 35px;
+  border: none;
+  margin: 0;
+  width: 35%;
+  font-family: inherit;
+  font-size: small;
+}
+
+option {
+  color: black;
+}
+
+input {
+  max-width: 200px;
+  height: 35px;
+  width: 35%;
+  margin:auto, 10px, auto, 10px;
+  text-align: right;
+  padding-right: 10px;
+}

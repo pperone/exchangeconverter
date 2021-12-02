@@ -1,24 +1,42 @@
 select {
-  background-color: white;
-  max-width: 200px;
-  margin:auto, 10px, auto, 10px;
-  height: 35px;
-  border: none;
-  margin: 0;
-  width: 35%;
-  font-family: inherit;
-  font-size: small;
+  -webkit-appearance:none;
+  background-color: transparent;
+  background: url("./downarrow.png") no-repeat 96% 50%;
+  font-size: 0.7em;
+  font-family: Montserrat;
+  border-radius: 5px;
+  border-color: white;
+  border-width: thin;
+  color: white;
+  padding: 20px;
+  width: 250px;
+  margin-bottom: 15px;
+  margin-right: 10px;
 }
 
 option {
-  color: black;
+  font-size: 0.5em;
+  color: white;
 }
 
 input {
-  max-width: 200px;
-  height: 35px;
-  width: 35%;
-  margin:auto, 10px, auto, 10px;
-  text-align: right;
-  padding-right: 10px;
+  -webkit-appearance: none;
+  border-width: thin;
+  font-size: 0.7em;
+  min-width: 250px;
+  border-radius: 5px;
+  border-color: white;
+  background-color: transparent;
+  color: white;
+  font-family: Montserrat;
+  font-weight: bold;
+  padding: 20px;
+  margin-left: 0;
+  margin-right: 10px;
+}
+
+.button {
+    background-color: white;
+    color: #282c34;
+    cursor: pointer;
 }

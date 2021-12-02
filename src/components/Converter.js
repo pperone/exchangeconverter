@@ -38,13 +38,15 @@ const Converter = (props) => {
   return (
     <div>
       <h3>Enter amount and select currency to convert:</h3>
+
       <input value={fromValue} onChange={handleFromValueChange}/>
       <CurrencySelect 
         value={toCurrency}
         onChange={handleToCurrencyChange}
         options={currencyKeys()}
       />
-      <button onClick={handleConversion}>Convert</button>
+      <input type='submit' class='button' value='convert' onClick={handleConversion}></input>
+
       <h5>Result: {toValue}</h5>
     </div>
   )
